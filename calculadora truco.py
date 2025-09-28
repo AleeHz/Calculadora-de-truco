@@ -64,7 +64,7 @@ def calcular_premio(event=None): # event=None para que funcione también con Ent
     
     
 def registrar_fondo(diez_por_ciento):
-    global total_fondo, last_60
+    global total_fondo, last_60,last_40
     total_fondo += diez_por_ciento
     #linea con la entrada y su 10%
     text_fondo.insert(tk.END,f"{diez_por_ciento}\n")
@@ -72,7 +72,24 @@ def registrar_fondo(diez_por_ciento):
     label_fondo.config(text=f"Total acumulado: ${total_fondo:0.f}")
     #calcular el 60 del total
     last_60=0.6 * total_fondo
+    last_40=0.4* total_fondo
     label_60.config(text=f"60% del fondo: ${last_60:0.f}")
+    label_40.config(text=f"40% del fondo: ${last_40:0.f}")
+
+def sumar_fondo():
+    # lee todas las líneas del Text
+    contenido = text_fondo.get("1.0", tk.END).strip().splitlines()
+    total = 0
+    for line in contenido:
+        try:
+            total += float(line)
+        except:
+            continue
+
+    # actualiza etiquetas
+    label_fondo.config(text=f"Total acumulado: ${total:.0f}")
+    label_60.config(text=f"60% del fondo: ${total*0.6:.0f}")
+    label_40.config(text=f"40% del fondo: ${total*0.4:.0f}")
 
 def copiar_texto():
     texto = label_resultado["text"]
@@ -84,24 +101,11 @@ def copiar_texto():
     else:
         messagebox.showwarning("Advertencia", "No hay texto para copiar")
 
-def copiar_60():
-    global last_60
 
-    if last_60 > 0:
-        ventana.clipboard_clear()
-        ventana.clipboard_append(f"{int(last_60)}")
-        ventana.update()  
-        messagebox.showinfo("Copiado", "El texto ha sido copiado")
-    else:
-        messagebox.showwarning("Advertencia", "No hay texto para copiar")
 
 def calcular_total():
     global total_fondo
     messagebox.showinfo("Total Acumulado", f"El total acumulado es: ${total_fondo:0.f}")    
-
-def mostrar_60():
-    global last_60
-    messagebox.showinfo("60% del Fondo", f"El 60% del fondo es: ${last_60:0.f}")
 
 
 def limpiar():
@@ -205,15 +209,13 @@ label_60 = tk.Label(tab2, text="60% del fondo: $0", bg='#F1F8E9',fg="black", rel
 label_60.pack(pady=5)
 
 #boton para copiar le 60%
-boton_copiar_60 = tk.Button(tab2, text="Copiar%", command=copiar_60, bg='#A5D6A7',fg="black", relief="flat", padx=5, pady=5)
-boton_copiar_60.pack(pady=5)
 
-btn_total = tk.Button(tab2, text="Ver Total", command=calcular_total)
-btn_total.pack(pady=5)
 
-btn_60 = tk.Button(tab2, text="Ver 60%", command=mostrar_60)
-btn_60.pack(pady=5)
+label_40 = tk.Label(tab2, text="40% del fondo: $0", bg='#F1F8E9',fg="black", relief="flat", padx=5, pady=5)
+label_40.pack(pady=5)
 
+btn_sumar = tk.Button(tab2, text="Sumar Valores", command=sumar_fondo, bg='#A5D6A7')
+btn_sumar.pack(pady=5)
 
 
 #para salir en pestaña 2
