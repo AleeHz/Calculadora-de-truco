@@ -1,0 +1,84 @@
+[1mdiff --git a/calculadora truco.py b/calculadora truco.py[m
+[1mindex 7a2df81..626c12d 100644[m
+[1m--- a/calculadora truco.py[m	
+[1m+++ b/calculadora truco.py[m	
+[36m@@ -64,7 +64,7 @@[m [mdef calcular_premio(event=None): # event=None para que funcione también con Ent[m
+     [m
+     [m
+ def registrar_fondo(diez_por_ciento):[m
+[31m-    global total_fondo, last_60[m
+[32m+[m[32m    global total_fondo, last_60,last_40[m
+     total_fondo += diez_por_ciento[m
+     #linea con la entrada y su 10%[m
+     text_fondo.insert(tk.END,f"{diez_por_ciento}\n")[m
+[36m@@ -72,7 +72,24 @@[m [mdef registrar_fondo(diez_por_ciento):[m
+     label_fondo.config(text=f"Total acumulado: ${total_fondo:0.f}")[m
+     #calcular el 60 del total[m
+     last_60=0.6 * total_fondo[m
+[32m+[m[32m    last_40=0.4* total_fondo[m
+     label_60.config(text=f"60% del fondo: ${last_60:0.f}")[m
+[32m+[m[32m    label_40.config(text=f"40% del fondo: ${last_40:0.f}")[m
+[32m+[m
+[32m+[m[32mdef sumar_fondo():[m
+[32m+[m[32m    # lee todas las líneas del Text[m
+[32m+[m[32m    contenido = text_fondo.get("1.0", tk.END).strip().splitlines()[m
+[32m+[m[32m    total = 0[m
+[32m+[m[32m    for line in contenido:[m
+[32m+[m[32m        try:[m
+[32m+[m[32m            total += float(line)[m
+[32m+[m[32m        except:[m
+[32m+[m[32m            continue[m
+[32m+[m
+[32m+[m[32m    # actualiza etiquetas[m
+[32m+[m[32m    label_fondo.config(text=f"Total acumulado: ${total:.0f}")[m
+[32m+[m[32m    label_60.config(text=f"60% del fondo: ${total*0.6:.0f}")[m
+[32m+[m[32m    label_40.config(text=f"40% del fondo: ${total*0.4:.0f}")[m
+ [m
+ def copiar_texto():[m
+     texto = label_resultado["text"][m
+[36m@@ -84,25 +101,12 @@[m [mdef copiar_texto():[m
+     else:[m
+         messagebox.showwarning("Advertencia", "No hay texto para copiar")[m
+ [m
+[31m-def copiar_60():[m
+[31m-    global last_60[m
+ [m
+[31m-    if last_60 > 0:[m
+[31m-        ventana.clipboard_clear()[m
+[31m-        ventana.clipboard_append(f"{int(last_60)}")[m
+[31m-        ventana.update()  [m
+[31m-        messagebox.showinfo("Copiado", "El texto ha sido copiado")[m
+[31m-    else:[m
+[31m-        messagebox.showwarning("Advertencia", "No hay texto para copiar")[m
+ [m
+ def calcular_total():[m
+     global total_fondo[m
+     messagebox.showinfo("Total Acumulado", f"El total acumulado es: ${total_fondo:0.f}")    [m
+ [m
+[31m-def mostrar_60():[m
+[31m-    global last_60[m
+[31m-    messagebox.showinfo("60% del Fondo", f"El 60% del fondo es: ${last_60:0.f}")[m
+[31m-[m
+ [m
+ def limpiar():[m
+     entrada_apueta.delete(0, tk.END)[m
+[36m@@ -205,15 +209,13 @@[m [mlabel_60 = tk.Label(tab2, text="60% del fondo: $0", bg='#F1F8E9',fg="black", rel[m
+ label_60.pack(pady=5)[m
+ [m
+ #boton para copiar le 60%[m
+[31m-boton_copiar_60 = tk.Button(tab2, text="Copiar%", command=copiar_60, bg='#A5D6A7',fg="black", relief="flat", padx=5, pady=5)[m
+[31m-boton_copiar_60.pack(pady=5)[m
+ [m
+[31m-btn_total = tk.Button(tab2, text="Ver Total", command=calcular_total)[m
+[31m-btn_total.pack(pady=5)[m
+ [m
+[31m-btn_60 = tk.Button(tab2, text="Ver 60%", command=mostrar_60)[m
+[31m-btn_60.pack(pady=5)[m
+[32m+[m[32mlabel_40 = tk.Label(tab2, text="40% del fondo: $0", bg='#F1F8E9',fg="black", relief="flat", padx=5, pady=5)[m
+[32m+[m[32mlabel_40.pack(pady=5)[m
+ [m
+[32m+[m[32mbtn_sumar = tk.Button(tab2, text="Sumar Valores", command=sumar_fondo, bg='#A5D6A7')[m
+[32m+[m[32mbtn_sumar.pack(pady=5)[m
+ [m
+ [m
+ #para salir en pestaña 2[m
