@@ -134,7 +134,7 @@ def calcular_total():
 
 def limpiar():
     entrada_apueta.delete(0, tk.END)
-    personas_entrada.delete(0, tk.END)
+    #personas_entrada.delete(0, tk.END)
     label_resultado.config(text="")
 
 def validar_float(texto):
@@ -284,8 +284,7 @@ button_salir2 = tk.Button(tab2, text="Salir", command=ventana.destroy, bg="#A5D6
 button_salir2.pack(pady=5)
 
 
-#icono de barra de tareas
-ventana.iconbitmap("truco.ico")
+
 
 
 ventana.mainloop()
