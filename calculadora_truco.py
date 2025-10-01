@@ -14,7 +14,7 @@ def calcular_premio(event=None): # event=None para que funcione también con Ent
 
         entrada=entrada_apueta.get()
         
-        personas=personas_entrada.get()
+        personas=int(personas_var.get())
         
         if entrada == "" or personas=="":
             messagebox.showerror("Error", "Por favor, ingresa todos los valores.")
@@ -27,10 +27,10 @@ def calcular_premio(event=None): # event=None para que funcione también con Ent
             messagebox.showerror("Error", "Por favor, ingresa valores numéricos válidos.")
             return
 
-        # leer comisión del combobox y convertir a decimal (p.ej "14" -> 0.14, "14%" -> 0.14)
+
         try:
             com_text = comision_var.get().strip()
-            com_text = com_text.replace('%', '').replace(',', '.')  # soporta "14" y "14%"
+            com_text = com_text.replace('%', '').replace(',', '.')  
             comision = float(com_text) / 100.0
         except Exception:
             comision = 0.10  # fallback 10%
@@ -159,7 +159,18 @@ def validar_int(texto):
 ventana = tk.Tk()
 ventana.title("Calculadora de Premio de Truco")
 #ventana.update_idletasks()
-ventana.geometry("400x750")
+#ventana.geometry("400x750")
+
+ventana.update_idletasks()
+width = 400
+height = 750
+
+ancho_pantalla = ventana.winfo_screenwidth()
+alto_pantalla = ventana.winfo_screenheight()
+x = (ancho_pantalla // 2) - (width // 2)
+y = (alto_pantalla // 2) - (height // 2)
+ventana.geometry(f"{width}x{height}+{x}+{y}")
+
 ventana.configure(bg='#E8F5E9')
 
 #pestañas
@@ -185,9 +196,12 @@ entrada_apueta.pack(pady=5)
 
 personas_apuesta = tk.Label(tab1, text="Ingrese la cantidad de personas:", bg='#E8F5E9',fg="black", relief="flat", padx=5, pady=5)
 personas_apuesta.pack(pady=5)
-personas_entrada = tk.Entry(tab1, validate="key", validatecommand=(validar_int_cmd, '%P'))
-personas_entrada.pack(pady=5)
-
+#combobox
+personas_var=tk.StringVar()
+combo_personas=ttk.Combobox(tab1,textvariable=personas_var, state="readonly")
+combo_personas['values']=("1","2","3")
+combo_personas.current(0)  # el valor inicial va a ser el uno
+combo_personas.pack(pady=5)
 #seccion de la comision
 label_comision = tk.Label(tab1, text="Seleccione comisión (%):", bg='#E8F5E9', fg="black")
 label_comision.pack(pady=5)
@@ -207,7 +221,7 @@ label_frase.pack(pady=5)
 
 frase_var = tk.StringVar()
 combo_frase = ttk.Combobox(tab1, textvariable=frase_var, state="readonly")
-combo_frase['values'] = ("A 30 PUNTOS", "A 15 PUNTOS", "MD3 15", "MD3 30", "A LA FALTA")
+combo_frase['values'] = ("A 30 ", "A 15", "md3 15", "md3 30", "A la falta","md5 faltas")
 combo_frase.current(0)  # valor inicial
 combo_frase.pack(pady=5)
 
@@ -269,6 +283,9 @@ btn_sumar.pack(pady=5)
 button_salir2 = tk.Button(tab2, text="Salir", command=ventana.destroy, bg="#A5D6A7", fg="black", relief="flat", padx=5, pady=5)
 button_salir2.pack(pady=5)
 
+
+#icono de barra de tareas
+ventana.iconbitmap("truco.ico")
 
 
 ventana.mainloop()
