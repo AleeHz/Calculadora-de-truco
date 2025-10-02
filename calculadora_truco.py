@@ -221,7 +221,7 @@ label_frase.pack(pady=5)
 
 frase_var = tk.StringVar()
 combo_frase = ttk.Combobox(tab1, textvariable=frase_var, state="readonly")
-combo_frase['values'] = ("A 30 ", "A 15", "md3 15", "md3 30", "A la falta","md5 faltas")
+combo_frase['values'] = ("A 30 ", "A 15", "md3 15", "md3 30", "A la falta","md5 faltas","md7 faltas","md11 faltas")
 combo_frase.current(0)  # valor inicial
 combo_frase.pack(pady=5)
 
