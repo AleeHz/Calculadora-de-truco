@@ -37,40 +37,38 @@ def calcular_premio(event=None): # event=None para que funcione también con Ent
         
 
         # calcular comisión
-        if entrada == 2500:
-            diez_por_ciento_redondeado = 300
+        if 500 <= entrada < 1900:
+            diez_por_ciento = 200
+            premio_redondeado = round((entrada* 2 - 200) / 100) * 100
+        
+        elif 2000 <= entrada < 2900:
+            diez_por_ciento = 300
+            premio_redondeado = round((entrada* 2 - 300) / 100) * 100
+
         else:
-            comision_valor = entrada * comision
+            comision_valor= entrada * comision
             diez_por_ciento_redondeado = round(comision_valor / 100) * 100
-        
-        # caso especial
-        if entrada ==2500:
-            premio_redondeado=4700
-        else:
-            premio = (2 * entrada - comision * entrada) 
-            premio_redondeado= round(premio/100)*100
-
-
-        
+            premio=(2*entrada- comision*entrada)
+            premio_redondeado = round(premio / 100) * 100
         # caso especial para 1vs1
         if personas == 1:
-            titulo = "Mano a Mano TRUCO"
+            titulo = "1vs1"
         else:
-            titulo = f"{personas}vs{personas} TRUCO"
+            titulo = f"{personas}vs{personas}"
         
 
         frase_seleccionada = frase_var.get()
 
         label_resultado.config(text=f"""🇦🇷⚔️🛡️‼ *{titulo}* 🇦🇷⚔️🛡️‼
-        💵 *ENTRADA ${entrada:.0f}*
-        🏆 *PREMIO ${premio_redondeado:.0f}*
+💵 *ENTRADA ${entrada:.0f}*
+🏆 *PREMIO ${premio_redondeado:.0f}*
 
-        *{frase_seleccionada}*
+*{frase_seleccionada}*
 
-        👤  
-        👤  
+👤
+👤
 
-        🇦🇷 *QUIERO RETRUCO ARGENTINO* 🇦🇷""")
+🇦🇷 *QUIERO RETRUCO ARGENTINO* 🇦🇷""")
 
     
         
@@ -221,7 +219,7 @@ label_frase.pack(pady=5)
 
 frase_var = tk.StringVar()
 combo_frase = ttk.Combobox(tab1, textvariable=frase_var, state="readonly")
-combo_frase['values'] = ("A 30 ", "A 15", "md3 15", "md3 30", "A la falta","md5 faltas","md7 faltas","md11 faltas")
+combo_frase['values'] = ("A 30 Puntos", "A 15 Puntos","15 o 30 Puntos", "md3 15", "md3 30", "A la falta","md5 faltas","md7 faltas","md11 faltas")
 combo_frase.current(0)  # valor inicial
 combo_frase.pack(pady=5)
 
