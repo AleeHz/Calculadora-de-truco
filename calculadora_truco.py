@@ -44,6 +44,34 @@ def calcular_premio(event=None): # event=None para que funcione también con Ent
         elif 2000 <= entrada < 2900:
             diez_por_ciento = 300
             premio_redondeado = round((entrada* 2 - 300) / 100) * 100
+        
+        elif 3000 <= entrada < 3900:
+            diez_por_ciento = 400
+            premio_redondeado = round((entrada* 2 - 400) / 100) * 100
+        
+        elif 4000 <= entrada < 4900:
+            diez_por_ciento = 500
+            premio_redondeado = round((entrada* 2 - 500) / 100) * 100
+        
+        elif  5000 <= entrada < 5900:
+            diez_por_ciento = 600
+            premio_redondeado = round((entrada* 2 - 600) / 100) * 100
+
+        elif  6000 <= entrada < 6900:
+            diez_por_ciento = 700
+            premio_redondeado = round((entrada* 2 - 700) / 100) * 100
+        
+        elif  7000 <= entrada < 7900:
+            diez_por_ciento = 800
+            premio_redondeado = round((entrada* 2 - 800) / 100) * 100
+
+        elif  8000 <= entrada < 8900:
+            diez_por_ciento = 900
+            premio_redondeado = round((entrada* 2 - 900) / 100) * 100
+
+        elif 9000 <= entrada < 9900:
+            diez_por_ciento = 1000
+            premio_redondeado = round((entrada* 2 - 1000) / 100) * 100
 
         else:
             comision_valor= entrada * comision
