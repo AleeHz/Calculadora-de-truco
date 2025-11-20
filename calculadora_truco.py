@@ -16,9 +16,9 @@ def calcular_premio(event=None): # event=None para que funcione también con Ent
         
         personas=int(personas_var.get())
         
-        if entrada == "" or personas=="":
-            messagebox.showerror("Error", "Por favor, ingresa todos los valores.")
-            return
+    
+
+        
 
         try:
             entrada = float(entrada)
@@ -27,7 +27,8 @@ def calcular_premio(event=None): # event=None para que funcione también con Ent
             messagebox.showerror("Error", "Por favor, ingresa valores numéricos válidos.")
             return
 
-
+        puntos= math.floor(entrada/100)
+        puntos_redondeados=(puntos//10)*10
         try:
             com_text = comision_var.get().strip()
             com_text = com_text.replace('%', '').replace(',', '.')  
@@ -37,47 +38,12 @@ def calcular_premio(event=None): # event=None para que funcione también con Ent
         
 
         # calcular comisión
-        if 500 <= entrada < 1900:
-            diez_por_ciento = 200
-            premio_redondeado = round((entrada* 2 - 200) / 100) * 100
-        
-        elif 2000 <= entrada < 2900:
-            diez_por_ciento = 300
-            premio_redondeado = round((entrada* 2 - 300) / 100) * 100
-        
-        elif 3000 <= entrada < 3900:
-            diez_por_ciento = 400
-            premio_redondeado = round((entrada* 2 - 400) / 100) * 100
-        
-        elif 4000 <= entrada < 4900:
-            diez_por_ciento = 500
-            premio_redondeado = round((entrada* 2 - 500) / 100) * 100
-        
-        elif  5000 <= entrada < 5900:
-            diez_por_ciento = 600
-            premio_redondeado = round((entrada* 2 - 600) / 100) * 100
 
-        elif  6000 <= entrada < 6900:
-            diez_por_ciento = 700
-            premio_redondeado = round((entrada* 2 - 700) / 100) * 100
+        comision_valor= entrada * comision
+        diez_por_ciento_redondeado = math.floor(comision_valor / 100) * 100
         
-        elif  7000 <= entrada < 7900:
-            diez_por_ciento = 800
-            premio_redondeado = round((entrada* 2 - 800) / 100) * 100
-
-        elif  8000 <= entrada < 8900:
-            diez_por_ciento = 900
-            premio_redondeado = round((entrada* 2 - 900) / 100) * 100
-
-        elif 9000 <= entrada < 9900:
-            diez_por_ciento = 1000
-            premio_redondeado = round((entrada* 2 - 1000) / 100) * 100
-
-        else:
-            comision_valor= entrada * comision
-            diez_por_ciento_redondeado = round(comision_valor / 100) * 100
-            premio=(2*entrada- comision*entrada)
-            premio_redondeado = round(premio / 100) * 100
+        premio=(2*entrada- comision*entrada)
+        premio_redondeado = round(premio / 100) * 100
         # caso especial para 1vs1
         if personas == 1:
             titulo = "1vs1"
@@ -87,27 +53,20 @@ def calcular_premio(event=None): # event=None para que funcione también con Ent
 
         frase_seleccionada = frase_var.get()
 
-        label_resultado.config(text=f"""🇦🇷⚔️🛡️‼ *{titulo}* 🇦🇷⚔️🛡️‼
-💵 *ENTRADA ${entrada:.0f}*
-🏆 *PREMIO ${premio_redondeado:.0f}*
-
-*{frase_seleccionada}*
-
-👤
-👤
-
-🇦🇷 *QUIERO RETRUCO ARGENTINO* 🇦🇷""")
+        label_resultado.config(text=f"""🃏 *TRUCO TOTTENHAM* 🃏
+💎⚔️ *{titulo}* *{frase_seleccionada}* ⚔️💎
+*INSCRIP:  ${entrada:.0f}*
+*PREMIO:  ${premio_redondeado:.0f}*
+◾:
+◽: 
+*GANADOR SUMA {puntos_redondeados} PUNTOS*
+responder mesa con captura""")
 
     
         
 
-        # #calcular el 10% y guardar el valor
-        if entrada == 2500:
-            diez_por_ciento_redondeado = 300
-        else:
-            diez_por_ciento = entrada * comision
-        # redondeo normal a la centena más cercana
-            diez_por_ciento_redondeado = round(diez_por_ciento / 100) * 100
+        
+        
 
 # registrar en la pestaña 2
         registrar_fondo(diez_por_ciento_redondeado)
@@ -200,7 +159,7 @@ ventana.geometry(f"{width}x{height}+{x}+{y}")
 ventana.configure(bg='#E8F5E9')
 
 #pestañas
-notebook = tk.ttk.Notebook(ventana)
+notebook = ttk.Notebook(ventana)
 notebook.pack(expand=True, fill='both')
 
 #pestaña 1
